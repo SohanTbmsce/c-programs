@@ -1,0 +1,35 @@
+B4: https://leetcode.com/problems/count-complete-tree-nodes/description/
+#include <stdlib.h>
+#include <stdio.h>
+
+
+int leftHeight(struct TreeNode* node) {
+    int height = 0;
+    while (node) {
+        height++;
+        node = node->left;
+    }
+    return height;
+}
+
+int countNodes(struct TreeNode* root) {
+    if (!root) {
+        return 0;
+    }
+
+    int leftHeightVal = leftHeight(root);
+    int rightHeightVal = leftHeight(root->right);
+
+    if (leftHeightVal == rightHeightVal) {
+        // The last level is fully filled, and the total number of nodes is 2^h - 1
+        return (1 << leftHeightVal) - 1;
+    } else {
+        // Recursively count nodes in the left and right subtrees
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+}
+
+// Example usage:
+// struct TreeNode* createTree() {
+//     // Create and return a sample binary tree
+// }
